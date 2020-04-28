@@ -1,7 +1,7 @@
 # SSD2119 Driver for Adafruit GFX
 ## History
 This is the result of enforced idleness during the Covid-19 lockdown. I have a 3.5" TFT display never used because I didn't know what IC it was based on no software to drive it. 
-Eventually I discovered that it was an SSD2119 but that didn't help as I couldn't find an Arduino library.
+Eventually  via the site https://www.alibaba.com/product-detail/3-5-TFT-LCD-Module-Display_1976721279.html I discovered that it was an SSD2119 but that didn't help as I couldn't find an Arduino library.
 Later I came upon https://github.com/TheFax/SSD2119-library which contains all the source needed to drive the TFT but it isn't really a library, rather a flat Arduino sketch.
 ## How I did it
 ### What I added
