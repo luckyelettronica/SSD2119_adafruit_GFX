@@ -20,7 +20,7 @@ Investigate other devices on board.
 ## Pin Confusion
 One of the hardest problems I had was understanding the labels on the pins on the TFT board, a source of much confusion.<p>
 RS   a.k.a. Register Select (Data/Command) a.k.a. DC<p>
-SCL  a.k.a. SPI clock a.k.a. SCLK<p>
-SDA  a.k.a  SPI Data Host to Slave a.k.a. MOSI<p>
+SCL  a.k.a. SPI clock a.k.a. SCLK  NOTE: This does NOT refer to I2C SCL<p>
+SDA  a.k.a  SPI Master to Slave a.k.a. MOSI  NOTE: This does NOT refer to I2C SDA<p>
 I assume the pins marked SCLK, MOSI, MISO are for the other SPI devices on board, SD card, Touch Screen and DataFlash.
   
