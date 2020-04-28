@@ -10,6 +10,7 @@ While that provides basic functionality it can be painfully slow. There are othe
 ### What I took away
 All drawing primitives and font information. These are now provided by GFX
 ### What I changed
+The C style code was repackaged as a C++ class.<p>
 Only color mode RGB565 is supported. That is what GFX uses and what the SSD2119 provides.<p>
 It is no longer necessary to specify the target architecture which is now recognised at compile time.<p>
 For the Due platform extended SPI is compiled even though Arduino forums advise against it. I measured a small performance benefit.
