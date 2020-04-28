@@ -1,31 +1,26 @@
-# Adafruit GFX Library ![Build Status](https://github.com/adafruit/Adafruit-GFX-Library/workflows/Arduino%20Library%20CI/badge.svg)
-
-This is the core graphics library for all our displays, providing a common set of graphics primitives (points, lines, circles, etc.). It needs to be paired with a hardware-specific library for each display device we carry (to handle the lower-level functions).
-
-Adafruit invests time and resources providing this open source code, please support Adafruit and open-source hardware by purchasing products from Adafruit!
-
-Written by Limor Fried/Ladyada for Adafruit Industries.
-BSD license, check license.txt for more information.
-All text above must be included in any redistribution.
-
-Recent Arduino IDE releases include the Library Manager for easy installation. Otherwise, to download, click the DOWNLOAD ZIP button, uncompress and rename the uncompressed folder Adafruit_GFX. Confirm that the Adafruit_GFX folder contains Adafruit_GFX.cpp and Adafruit_GFX.h. Place the Adafruit_GFX library folder your ArduinoSketchFolder/Libraries/ folder. You may need to create the Libraries subfolder if its your first library. Restart the IDE.
-
-# Useful Resources
-
-- Image2Code: This is a handy Java GUI utility to convert a BMP file into the array code necessary to display the image with the drawBitmap function. Check out the code at ehubin's GitHub repository: https://github.com/ehubin/Adafruit-GFX-Library/tree/master/Img2Code
-
-- drawXBitmap function: You can use the GIMP photo editor to save a .xbm file and use the array saved in the file to draw a bitmap with the drawXBitmap function. See the pull request here for more details: https://github.com/adafruit/Adafruit-GFX-Library/pull/31
-
-- 'Fonts' folder contains bitmap fonts for use with recent (1.1 and later) Adafruit_GFX. To use a font in your Arduino sketch, \#include the corresponding .h file and pass address of GFXfont struct to setFont(). Pass NULL to revert to 'classic' fixed-space bitmap font.
-
-- 'fontconvert' folder contains a command-line tool for converting TTF fonts to Adafruit_GFX header format.
-
----
-
-### Roadmap
-
-The PRIME DIRECTIVE is to maintain backward compatibility with existing Arduino sketches -- many are hosted elsewhere and don't track changes here, some are in print and can never be changed! This "little" library has grown organically over time and sometimes we paint ourselves into a design corner and just have to live with it or add ungainly workarounds.
-
-Highly unlikely to merge any changes for additional or incompatible font formats (see Prime Directive above). There are already two formats and the code is quite bloaty there as it is (this also creates liabilities for tools and documentation). If you *must* have a more sophisticated font format, consider creating a fork with the features required for your project. For similar reasons, also unlikely to add any more bitmap formats, it's getting messy.
-
-Please don't reformat code for the sake of reformatting code. The resulting large "visual diff" makes it impossible to untangle actual bug fixes from merely rearranged lines.
+# SSD2119 Driver for Adafruit GFX
+## History
+This is the result of enforced idleness during the Covid-19 lockdown. I have a 3.5" TFT display never used because I didn't know what IC it was based on no software to drive it. 
+Eventually I discovered that it was an SSD2119 but that didn't help as I couldn't find an Arduino library.
+Later I came upon https://github.com/TheFax/SSD2119-library which contains all the source needed to drive the TFT but it isn't really a library, rather a flat Arduino sketch.
+## How I did it
+### What I added
+Adafuit GFX has all the drawing primitives I need so seemed the obvious partner. All one has to do is provide at least one method, drawPixel. All the rest falls into place.
+While that provides basic functionality it can be painfully slow. There are other GFX methods that may be overridden for better performance. So far I have implemented drawFastHLine which also helped me to implement fillScreen, fillRect and drawRect.
+### What I took away
+All drawing primitives and font information. These are now provided by GFX
+### What I changed
+Only color mode RGB565 is supported. That is what GFX uses and what the SSD2119 provides.<p>
+It is no longer necessary to specify the target architecture which is now recognised at compile time.<p>
+For the Due platform extended SPI is compiled even though Arduino forums advise against it. I measured a small performance benefit.
+## TBD
+Implement GFX methods setRotation and drawFastVLine.<p>
+This is still a work in progress and I have yet to develop better optimisation.<p>
+Investigate other devices on board.
+## Pin Confusion
+One of the hardest problems I had was understanding the labels on the pins on the TFT board, a source of much confusion.<p>
+RS   a.k.a. Register Select (Data/Command) a.k.a. DC<p>
+SCL  a.k.a. SPI clock a.k.a. SCLK<p>
+SDA  a.k.a  SPI Data Host to Slave a.k.a. MOSI<p>
+I assume the pins marked SCLK, MOSI, MISO are for the other SPI devices on board, SD card, Touch Screen and DataFlash.
+  
