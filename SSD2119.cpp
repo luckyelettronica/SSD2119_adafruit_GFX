@@ -1,8 +1,3 @@
-/*
-     This source was originally written by https://github.com/TheFax/SSD2119-library
-	 
-	  It was repackacked as an Arduino library and Adafruit GFX virtual functions overriden 
-*/
 #include <Arduino.h>
 #include "SSD2119.h"
 #include <SPI.h>
@@ -331,16 +326,19 @@ uint32_t SSD2119::color888(uint16_t rgb565)
   return last888;
 }
 
+void SSD2119::drawPixel(int16_t x, int16_t y, uint16_t color) {
+  // convert adafruit 565 RGB to 888
+  if (_palette == RGB888)
+    DrawOnePixel(x,y,color888(color));
+  else
+    DrawOnePixel(x,y,color);
+}
+
 // Pass 8-bit (each) R,G,B, get back 16-bit packed color
 uint16_t SSD2119::color565(uint8_t r, uint8_t g, uint8_t b) {
   return ((r & 0xF8) << 8) | ((g & 0xFC) << 2) | (b >> 3);
 }
 
-/**************************************************************************************
-*
-*  Adafruit  GFX overriden methods
-*
-*************************************************************************************/
 void SSD2119::setRotation(uint8_t r) {
   uint16_t r11h = currentR11H & 0xffc7; // mask out bits 3-5
   // note r note defined anywhere in adafruit documents
@@ -361,14 +359,6 @@ void SSD2119::setRotation(uint8_t r) {
   SSD2119WriteCmd(SSD2119_ENTRY_MODE_REG);
   SSD2119WriteData(r11h);
   currentR11H = r11h;
-}
-
-void SSD2119::drawPixel(int16_t x, int16_t y, uint16_t color) {
-  // convert adafruit 565 RGB to 888
-  if (_palette == RGB888)
-    DrawOnePixel(x,y,color888(color));
-  else
-    DrawOnePixel(x,y,color);
 }
 
 void SSD2119::drawFastHLine(int16_t x, int16_t y, int16_t w, uint16_t color) {

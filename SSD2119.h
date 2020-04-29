@@ -15,20 +15,30 @@
   -code scraps by CooCox (Copyright (c)2011, CooCox)
   -code scraps wrote by Steven Prickett (Kentec 320x240x16 BoosterPack)
 
-  Modified by David Henry https://github.com/mgaman
-  
-  The changes are as follows:
-  1. Removed the original HARDWARE_IS_MEGA / DUE  macros and replaced with compile time constants __AVR__ and _LIB_SEM_.
-  See  #if defined(_LIB_SAM_)  etc
-  2. I retained the calls to extended SPI for Due even though current advice on Arduino forums says not to. I found that performance is better when using extended SPI.
-  3. The source was repackaged as a C++ class for use in Arduino. The source is practically identical, just written as C++, not C.
-  4. All drawing functions and fonts were deleted. Instead it now behaves as a driver for the Adafruit GFX library.
-  5. Colour now uses just the RGB565 format for 2 reasons (a) GFX uses it and (b) that it what the card uses.
-  6. To comple with GFX one virtual method. drawPixel, MUST be implemented by SSD2119 and others MAY implemented to improve performance.
-  7. To date I have implemented drawFastHLine, fillScreen, fillRect and drawRect.
-  8. TBD drawFastVLine and setRotation.
-*/
+  ---->  NOT FOR COMMERCIAL USE  <----
 
+  Date:              November 2015
+  Hardware target:   Arduino Mega -> 4-wire SPI bus -> SSD2119
+  Developer:         TheFax
+  This class contains:
+  SSD2119_init()                                      --> Setup of Color LCD display based on SSD2119
+  DrawOnePixel(X,Y,Color)                      --> Draw only one pixel
+  This class uses the 4 wire SPI bus of the LCD display.
+  Connections:
+  DISPLAY    |    ARDUINO/GENUINO Mega 2560   |  Notes
+  Reset      |    47                          | (LCD reset, low active)
+  SCL        |    52    (MANDATORY)           | (SPI Clock)
+  DC         |    49                          | (Data/Command)   RS on shield
+  CS         |    48                          | (Circuit Select, low active)
+  SDI        |    51    (MANDATORY)           | (SPI transfer, from uP to LCD)  // SDA on shield
+
+  DISPLAY    |    ARDUINO/GENUINO DUE         |  Notes
+  Reset      |    47                          | (LCD reset, low active)
+  SCL        |    on SPI connector            | (SPI Clock)
+  DC         |    49                          | (Data/Command)  RS on shield
+  CS         |    10                          | (Circuit Select, low active)  // for extended SPI on Die CS MUST be 4,10 or 52
+  SDI        |    on SPI connector            | (SPI transfer, from uP to LCD) // SDA on shield
+*/
 
 //Include the SPI library:
 #include <SPI.h>
