@@ -2,7 +2,7 @@
 ## History
 This is the result of enforced idleness during the Covid-19 lockdown. I have a 3.5" TFT display never used because I didn't know what IC it was based on no software to drive it. 
 Eventually  <a href="https://www.alibaba.com/product-detail/3-5-TFT-LCD-Module-Display_1976721279.html">here</a> I discovered that it was an SSD2119 but that didn't help as I couldn't find an Arduino library.
-Later I came upon <a href="https://github.com/TheFax/SSD2119-library">a project</a> which contains all the source needed to drive the TFT but it isn't really a library, rather a flat Arduino sketch.
+Later I came upon <a href="https://github.com/TheFax/SSD2119-library">this project</a> which contains all the source needed to drive the TFT but it isn't really a library, rather a flat Arduino sketch.
 ## How I did it
 Basically all I did was re-package the C style code as a C++ class.<p>
 ### What I added
