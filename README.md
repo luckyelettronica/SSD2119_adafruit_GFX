@@ -17,11 +17,11 @@ For the Due platform extended SPI is compiled even though Arduino forums advise 
 ## TBD
 Implement GFX methods setRotation and drawFastVLine.<p>
 This is still a work in progress and I have yet to develop better optimisation.<p>
-Investigate other devices on board.
+## Other Devices
+My board is described as having 3 other devices, SD card, TouchPanel and DataFlash. The SD card can be used via the SD library and the Touch Panel via the XPT2046 Touchscreen library. I could not find a flash device although I did find an unpopulated SMD place.
 ## Pin Confusion
 One of the hardest problems I had was understanding the labels on the pins on the TFT board, a source of much confusion.<p>
 RS   a.k.a. Register Select (Data/Command) a.k.a. DC<p>
 SCL  a.k.a. SPI clock a.k.a. SCLK.  NOTE: This does NOT refer to I2C SCL<p>
 SDA  a.k.a  SPI Master to Slave a.k.a. MOSI.  NOTE: This does NOT refer to I2C SDA<p>
-I assume the pins marked SCLK, MOSI, MISO are for the other SPI devices on board, SD card, Touch Screen and DataFlash.
-  
+If using just the TFT, use the SCL and SDA pins. If also using the SD and TouchPanel then SCLK, MOSI and MISO must be connected, in addition to SCL and SDA. Also make sure that all chip select pins are connected and unused devices deseleted.  
